@@ -1,0 +1,45 @@
+{% extends "admin/index.html" %}
+
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+.dashboard #content {
+    width: 90%;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    margin: 0;
+    padding: 8px;
+    font-weight: 400;
+    font-size: 13px;
+    text-align: left;
+    background: #7FB77E;
+    color: #7FB77E;
+}
+
+.footertext {
+    height: 100px;
+    background-color: #7FB77E;
+    margin: 10px 0px;
+    text-align: center;
+
+}
+
+.footertext h2{
+    color: white;
+    padding-top: 40px;
+    margin-top: 110px;
+
+}
+</style>
+{% endblock %}
+
+{% block sidebar  %}
+{% endblock %}
+
+{% block footer %}
+<div class="footertext">
+    <h2>© 2023 - Present <a href="https://homprasaddhakal.com.np/">Hom Prasad Dhakal</a> All Rights Reserved</h2>
+</div>
+{% endblock %}
