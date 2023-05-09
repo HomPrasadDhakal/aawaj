@@ -15,13 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view as swagger_get_schema_view
 from django.conf import settings
 from django.conf.urls.static import static
-
-
+from rest_framework.routers import DefaultRouter
+from audio import views as audio
 schema_view = swagger_get_schema_view(
     openapi.Info(
         title='Documentation for AAwaj APIs',
@@ -35,9 +35,17 @@ schema_view = swagger_get_schema_view(
 admin.site.site_header = "Aawaj"
 admin.site.index_title = "Welcome to the  Aawaj admin control pannel"
 
+router = DefaultRouter()
+
+
+router.register(
+    "apis/v1/public/audiobooks", audio.AllAudioBooksList, basename="All-audio-books"
+),
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-docs'),
+    path("", include(router.urls)),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
