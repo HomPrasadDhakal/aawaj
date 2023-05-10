@@ -16,6 +16,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'profile_picture', 'address', 'phone')
 
+class AllChapterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chapters
+        fields = ('audio_book', 'title', 'description', 'duration', 'created_at', 'audio_file', 'album')
+
 class AllAudoSerializers(serializers.ModelSerializer):
     category = serializers.CharField(source="category.name", read_only=True)
     uploaded_by = UserSerializer(read_only=True)
