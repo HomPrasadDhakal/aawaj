@@ -9,7 +9,7 @@ admin.site.unregister(Group)
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ("username", "email", "first_name", "last_name")
+    list_display = ("email", "first_name", "last_name","user_type", "is_active")
     
 
 @admin.register(Profile)

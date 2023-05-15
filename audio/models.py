@@ -27,6 +27,7 @@ class AudioBooks(models.Model):
     publish_date = models.DateField()
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     album = models.ImageField(upload_to="audio_book/album", null=True)
+    is_premium = models.BooleanField(default=False)
 
     def __str__(self):
         return self.book_name

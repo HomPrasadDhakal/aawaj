@@ -3,13 +3,19 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    username = models.CharField(max_length=50)
+    USERTYPE_CHOICES = (
+    ("SUPERUSER", "SUPERUSER"),
+    ("SYSTEMUSER", "SYSTEMUSER"),
+    ("NORMALUSERS", "NORMALUSERS"),
+    )
+    username = models.CharField(max_length=255, unique=True)
     email = models.EmailField(verbose_name="email", unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    user_type = models.CharField(choices= USERTYPE_CHOICES, max_length=255)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = "username", "first_name", "last_name"
+    REQUIRED_FIELDS = "first_name", "last_name","user_type"
 
     def __str__(self):
         return self.username

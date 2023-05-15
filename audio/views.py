@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import status, viewsets, mixins
-from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from audio.serializers import (
     AllAudoSerializers,
@@ -14,7 +14,7 @@ from audio.models import (
 )
 
 class AllAudioBooksList(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = AllAudoSerializers
     queryset = AudioBooks.objects.all().order_by("-id")
     

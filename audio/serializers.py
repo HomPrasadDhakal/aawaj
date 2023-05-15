@@ -26,4 +26,4 @@ class AllAudoSerializers(serializers.ModelSerializer):
     uploaded_by = UserSerializer(read_only=True)
     class Meta:
         model = AudioBooks
-        fields = ('id','book_name', 'book_author', 'category', 'speaker', 'publication', 'description', 'pdf_file', 'publish_date', 'uploaded_by')
+        fields = ('id','book_name', 'book_author', 'category', 'speaker', 'publication', 'pdf_file', 'publish_date', 'is_premium', 'uploaded_by',  'description')

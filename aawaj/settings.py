@@ -13,6 +13,7 @@ import os
 
 from pathlib import Path
 from decouple import config
+from datetime import timedelta
 from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -51,7 +52,9 @@ INSTALLED_APPS = [
     # swagger docs
     'drf_yasg',
     'accounts',
-    'audio',    
+    'audio',
+    # jwt
+    'rest_framework_simplejwt', 
 ]
 
 MIDDLEWARE = [
@@ -143,17 +146,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [str(BASE_DIR / "static"),]
+STATIC_ROOT = BASE_DIR / "webroot" / "static"
 
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "statics"),
-]
 
 
 # Description: (To define the path for the media file.)
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -162,11 +162,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
 AUTH_USER_MODEL = "accounts.User"
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=50),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=90),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "UPDATE_LAST_LOGIN": False,
+}
+
+SENDGRID_API_KEY =config("SENDGRID_API_KEY")
+SENDGRID_FROM_EMAIL =config("SENDGRID_FROM_EMAIL")
